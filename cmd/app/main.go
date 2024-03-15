@@ -20,7 +20,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	config := config.GetConfig()
+	cfg := config.GetConfig()
 
-	app.Run(config)
+	app.Run(cfg)
 }

@@ -2,23 +2,22 @@ package mongo
 
 import (
 	"context"
-	"log/slog"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type IMongo interface {
-	Connect() error
-	Disconnect() error
-	GetClient() *mongo.Client
-}
-
 type Mongo struct {
 	uri     string
 	timeout int64
 	client  *mongo.Client
+}
+
+type IMongo interface {
+	Connect() error
+	Disconnect() error
+	GetClient() *mongo.Client
 }
 
 func (m *Mongo) Connect() error {
@@ -29,13 +28,11 @@ func (m *Mongo) Connect() error {
 
 	client, err := mongo.Connect(ctx, opts)
 	if err != nil {
-		slog.Error(err.Error())
 		return err
 	}
 
 	err = client.Ping(ctx, nil)
 	if err != nil {
-		slog.Error(err.Error())
 		return err
 	}
 
@@ -46,7 +43,6 @@ func (m *Mongo) Connect() error {
 
 func (m *Mongo) Disconnect() error {
 	if err := m.client.Disconnect(context.TODO()); err != nil {
-		slog.Error(err.Error())
 		return err
 	}
 
