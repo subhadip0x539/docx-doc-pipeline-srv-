@@ -1,7 +1,6 @@
 package config
 
 import (
-	"log/slog"
 	"os"
 
 	"github.com/spf13/viper"
@@ -10,6 +9,12 @@ import (
 type DB struct {
 	URI      string `json:"uri"`
 	Database string `json:"database"`
+	Timeout  int    `json:"timeout"`
+}
+
+type AMQP struct {
+	URI      string `json:"uri"`
+	Exchange string `json:"exchange"`
 	Timeout  int    `json:"timeout"`
 }
 
@@ -22,12 +27,12 @@ type Server struct {
 type Config struct {
 	Server `json:"server"`
 	DB     `json:"db"`
+	AMQP   `json:"amqp"`
 }
 
 func Register(configFile string, configType string, mode string) error {
 	baseDirectory, err := os.Getwd()
 	if err != nil {
-		slog.Error(err.Error())
 		return err
 	}
 
@@ -57,6 +62,11 @@ func GetConfig() Config {
 			URI:      viper.GetString("DB_URI"),
 			Database: viper.GetString("DB_DATABASE"),
 			Timeout:  viper.GetInt("DB_TIMEOUT"),
+		},
+		AMQP: AMQP{
+			URI:      viper.GetString("AMQP_URI"),
+			Exchange: viper.GetString("AMQP_EXCHANGE"),
+			Timeout:  viper.GetInt("AMQP_TIMEOUT"),
 		},
 	}
 
