@@ -8,9 +8,10 @@ type IRabbitRepo interface {
 }
 
 type RabbitRepo struct {
-	channel *amqp.Channel
+	channel  *amqp.Channel
+	exchange string
 }
 
-func NewRabbitRepo(channel *amqp.Channel) IRabbitRepo {
-	return &RabbitRepo{channel: channel}
+func NewRabbitRepo(channel *amqp.Channel, exchange string) IRabbitRepo {
+	return &RabbitRepo{channel: channel, exchange: exchange}
 }

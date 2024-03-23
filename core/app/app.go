@@ -17,7 +17,7 @@ import (
 )
 
 func Run(cfg config.Config) {
-	db := mongo.NewMongo(cfg.DB.URI, int64(cfg.DB.Timeout))
+	db := mongo.NewMongo(cfg.Mongo.URI, int64(cfg.Mongo.Timeout))
 	if err := db.Connect(); err != nil {
 		slog.Error(err.Error())
 		os.Exit(1)
@@ -25,7 +25,7 @@ func Run(cfg config.Config) {
 	client := db.GetClient()
 	defer db.Disconnect()
 
-	amqp := rabbit.NewRabbit(cfg.AMQP.URI, cfg.AMQP.Exchange, int64(cfg.AMQP.Timeout))
+	amqp := rabbit.NewRabbit(cfg.Rabbit.URI, int64(cfg.Rabbit.Timeout))
 	if err := amqp.Connect(); err != nil {
 		slog.Error(err.Error())
 		os.Exit(1)
@@ -33,7 +33,7 @@ func Run(cfg config.Config) {
 	channel := amqp.GetChannel()
 	defer amqp.Disconnect()
 
-	uc := usecase.NewPipelineUseCase(repo.NewMongoRepo(client, cfg.DB.Database), repo.NewRabbitRepo(channel))
+	uc := usecase.NewPipelineUseCase(repo.NewMongoRepo(client, cfg.Mongo.Database), repo.NewRabbitRepo(channel, cfg.Rabbit.Exchange))
 
 	handler := gin.Default()
 	v1.NewRouter(handler, uc)
