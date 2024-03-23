@@ -10,10 +10,7 @@ type PipelineUseCase struct {
 	rabbitRepo repo.IRabbitRepo
 }
 
-func (uc *PipelineUseCase) FileUpload() {
-}
-
-func (uc *PipelineUseCase) FileDownload() {
+func (uc *PipelineUseCase) Dispatch() {
 }
 
 func NewPipelineUseCase(mongoRepo repo.IMongoRepo, rabbitRepo repo.IRabbitRepo) IPipelineUseCase {

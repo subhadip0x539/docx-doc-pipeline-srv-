@@ -5,10 +5,9 @@ import (
 )
 
 type Rabbit struct {
-	uri      string
-	exchange string
-	timeout  int64
-	channel  *amqp.Channel
+	uri     string
+	timeout int64
+	channel *amqp.Channel
 }
 
 type IRabbit interface {
@@ -25,10 +24,6 @@ func (r *Rabbit) Connect() error {
 
 	ch, err := conn.Channel()
 	if err != nil {
-		return err
-	}
-
-	if err := ch.ExchangeDeclare(r.exchange, "direct", true, false, false, false, nil); err != nil {
 		return err
 	}
 
@@ -49,6 +44,6 @@ func (r *Rabbit) GetChannel() *amqp.Channel {
 	return r.channel
 }
 
-func NewRabbit(uri string, exchange string, timeout int64) IRabbit {
-	return &Rabbit{uri: uri, exchange: exchange, timeout: timeout}
+func NewRabbit(uri string, timeout int64) IRabbit {
+	return &Rabbit{uri: uri, timeout: timeout}
 }
