@@ -1,7 +1,7 @@
 MODULE_NAME = $(shell go list -m)
 VERSION = $(shell git describe --tags --abbrev=0 2>/dev/null || echo "")
 
-SOURCE_DIR = ./cmd/app
+SOURCE_DIR = ./src/cmd/app
 BUILD_DIR = ./build
 BINARY_NAME = bin
 

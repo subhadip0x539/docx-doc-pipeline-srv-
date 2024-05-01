@@ -1,12 +1,14 @@
 package main
 
 import (
-	"docx-doc-pipeline-srv/config"
-	"docx-doc-pipeline-srv/core/app"
-	"docx-doc-pipeline-srv/pkg/logger"
-	"docx-doc-pipeline-srv/pkg/motd"
-	"log/slog"
 	"os"
+
+	"log/slog"
+
+	"docx-doc-pipeline-srv/src/config"
+	"docx-doc-pipeline-srv/src/internal/app"
+	"docx-doc-pipeline-srv/src/pkg/logger"
+	"docx-doc-pipeline-srv/src/pkg/motd"
 )
 
 func init() {
