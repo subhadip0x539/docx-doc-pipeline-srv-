@@ -6,13 +6,13 @@ import (
 	"github.com/spf13/viper"
 )
 
-type Mongo struct {
+type DB struct {
 	URI      string `json:"uri"`
 	Database string `json:"database"`
 	Timeout  int    `json:"timeout"`
 }
 
-type Rabbit struct {
+type AMQP struct {
 	URI      string `json:"uri"`
 	Exchange string `json:"exchange"`
 	Timeout  int    `json:"timeout"`
@@ -26,8 +26,8 @@ type Server struct {
 
 type Config struct {
 	Server `json:"server"`
-	Mongo  `json:"mongo"`
-	Rabbit `json:"rabbit"`
+	DB     `json:"db"`
+	AMQP   `json:"amqp"`
 }
 
 func Register(configFile string, configType string, mode string) error {
@@ -58,15 +58,15 @@ func GetConfig() Config {
 			Host: viper.GetString("SERVER_HOST"),
 			Port: viper.GetInt("SERVER_PORT"),
 		},
-		Mongo: Mongo{
-			URI:      viper.GetString("MONGO_URI"),
-			Database: viper.GetString("MONGO_DATABASE"),
-			Timeout:  viper.GetInt("MONGO_TIMEOUT"),
+		DB: DB{
+			URI:      viper.GetString("DB_URI"),
+			Database: viper.GetString("DB_DATABASE"),
+			Timeout:  viper.GetInt("DB_TIMEOUT"),
 		},
-		Rabbit: Rabbit{
-			URI:      viper.GetString("RABBIT_URI"),
-			Exchange: viper.GetString("RABBIT_EXCHANGE"),
-			Timeout:  viper.GetInt("RABBIT_TIMEOUT"),
+		AMQP: AMQP{
+			URI:      viper.GetString("AMQP_URI"),
+			Exchange: viper.GetString("AMQP_EXCHANGE"),
+			Timeout:  viper.GetInt("AMQP_TIMEOUT"),
 		},
 	}
 
