@@ -1,9 +1,11 @@
 package main
 
 import (
-	"docx-doc-pipeline-srv/src/pkg/rabbit"
 	"log"
+
 	"log/slog"
+
+	"docx-doc-pipeline-srv/src/pkg/rabbit"
 )
 
 func main() {

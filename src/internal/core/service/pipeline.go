@@ -1,10 +1,10 @@
 package service
 
 import (
-	"fmt"
-	"net/http"
-
 	"context"
+	"fmt"
+
+	"net/http"
 
 	"docx-doc-pipeline-srv/src/internal/domain"
 	"docx-doc-pipeline-srv/src/internal/port"
@@ -20,16 +20,16 @@ func NewPipelineService(repo port.IPipelineRepo) *TPipelineService {
 
 func (s *TPipelineService) Dispatch(ctx context.Context, event *domain.TEvent) domain.TError {
 	switch event.Type {
-	case domain.PdfMergeEventTag:
-		event.Key = domain.PdfMergeRequestEventKey
+	case domain.PDF_MERGE_EVENT_TYPE:
+		event.Key = domain.PDF_MERGE_REQUEST_KEY
 		return s.repo.PublishEvent(ctx, event)
-	case domain.PdfSplitEventType:
-		event.Key = domain.PdfSplitRequestEventKey
+	case domain.PDF_SPLIT_EVENT_TYPE:
+		event.Key = domain.PDF_SPLIT_REQUEST_KEY
 		return s.repo.PublishEvent(ctx, event)
 	default:
 		return domain.TError{
 			Code:    http.StatusBadRequest,
-			Message: domain.BadRequest,
+			Message: domain.BAD_REQUEST,
 			Error:   fmt.Errorf("unknown event type: %s", event.Type),
 		}
 	}

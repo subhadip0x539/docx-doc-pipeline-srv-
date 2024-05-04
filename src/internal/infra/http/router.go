@@ -1,9 +1,9 @@
 package http
 
 import (
-	"docx-doc-pipeline-srv/src/internal/adapter"
-
 	"github.com/gin-gonic/gin"
+
+	"docx-doc-pipeline-srv/src/internal/adapter"
 )
 
 func NewRouter(pipelineHandler adapter.TPipelineHandler) (*gin.Engine, error) {

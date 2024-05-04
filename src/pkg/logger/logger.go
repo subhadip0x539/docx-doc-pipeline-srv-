@@ -1,8 +1,9 @@
 package logger
 
 import (
-	"log/slog"
 	"os"
+
+	"log/slog"
 )
 
 func InitializeLogger() {

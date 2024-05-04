@@ -2,9 +2,10 @@ package motd
 
 import (
 	"fmt"
-	"os/exec"
 	"runtime"
 	"strings"
+
+	"os/exec"
 )
 
 var Version string = ""

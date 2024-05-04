@@ -3,9 +3,9 @@ package repo
 import (
 	"context"
 	"fmt"
-	"net/http"
 
 	"encoding/json"
+	"net/http"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 
@@ -42,7 +42,7 @@ func (r *TPipelineRepo) PublishEvent(ctx context.Context, event *domain.TEvent) 
 	if err != nil {
 		return domain.TError{
 			Code:    http.StatusInternalServerError,
-			Message: domain.InternalServerError,
+			Message: domain.INTERNAL_SERVER_ERROR,
 			Error:   fmt.Errorf("failed to marshal message body: %w", err),
 		}
 	}
@@ -54,7 +54,7 @@ func (r *TPipelineRepo) PublishEvent(ctx context.Context, event *domain.TEvent) 
 	if err != nil {
 		return domain.TError{
 			Code:    http.StatusInternalServerError,
-			Message: domain.InternalServerError,
+			Message: domain.INTERNAL_SERVER_ERROR,
 			Error:   fmt.Errorf("failed to publish event: %w", err),
 		}
 	}
