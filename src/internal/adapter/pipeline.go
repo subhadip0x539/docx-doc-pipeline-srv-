@@ -46,7 +46,11 @@ func (h *TPipelineHandler) Dispatch(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"message": "Event dispatched"})
+	ctx.JSON(http.StatusOK, TResponse[TPipelineDispatchResponseBody]{
+		Body:     nil,
+		Severity: RESPONSE_SEVERITY_SUCCESS,
+		Message:  "Event dispatched successfully",
+	})
 }
 
 func NewPipelineHandler(svc port.IPipelineService) *TPipelineHandler {
