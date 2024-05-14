@@ -9,6 +9,7 @@ import (
 
 	"docx-doc-pipeline-srv/src/internal/domain"
 	"docx-doc-pipeline-srv/src/internal/port"
+	"docx-doc-pipeline-srv/src/internal/schema"
 )
 
 type TPipelineHandler struct {
@@ -16,11 +17,14 @@ type TPipelineHandler struct {
 }
 
 func (h *TPipelineHandler) Dispatch(ctx *gin.Context) {
-	var request TPipelineDispatchRequest
+	var request schema.TPipelineDispatchRequest
 
 	if err := ctx.ShouldBind(&request); err != nil {
 		slog.Error(err.Error())
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusBadRequest, schema.TResponse[schema.TPipelineDispatchResponseBody]{
+			Severity: schema.RESPONSE_SEVERITY_ERROR,
+			Message:  string(domain.ERROR_MESSAGE_BAD_REQUEST),
+		})
 		ctx.Abort()
 		return
 	}
@@ -41,14 +45,17 @@ func (h *TPipelineHandler) Dispatch(ctx *gin.Context) {
 
 	if err := h.svc.Dispatch(ctx, &event); err.Error != nil {
 		slog.Error(err.Error.Error())
-		ctx.JSON(http.StatusInternalServerError, gin.H{"message": err.Message})
+		ctx.JSON(http.StatusInternalServerError, schema.TResponse[schema.TPipelineDispatchResponseBody]{
+			Severity: schema.RESPONSE_SEVERITY_ERROR,
+			Message:  string(err.Message),
+		})
 		ctx.Abort()
 		return
 	}
 
-	ctx.JSON(http.StatusOK, TResponse[TPipelineDispatchResponseBody]{
+	ctx.JSON(http.StatusOK, schema.TResponse[schema.TPipelineDispatchResponseBody]{
 		Body:     nil,
-		Severity: RESPONSE_SEVERITY_SUCCESS,
+		Severity: schema.RESPONSE_SEVERITY_SUCCESS,
 		Message:  "Event dispatched successfully",
 	})
 }

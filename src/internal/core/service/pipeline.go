@@ -29,7 +29,7 @@ func (s *TPipelineService) Dispatch(ctx context.Context, event *domain.TEvent) d
 	default:
 		return domain.TError{
 			Code:    http.StatusBadRequest,
-			Message: domain.BAD_REQUEST,
+			Message: domain.ERROR_MESSAGE_BAD_REQUEST,
 			Error:   fmt.Errorf("unknown event type: %s", event.Type),
 		}
 	}
